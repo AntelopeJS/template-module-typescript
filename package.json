@@ -1,0 +1,30 @@
+{
+  "name": "antelopejs-module",
+  "version": "0.0.1",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "rm -fr dist && tsc",
+    "dev:prepare": "cd playground && ajs module imports install",
+    "dev": "ajs project run -w -p playground",
+    "generate": "ajs module exports generate",
+    "prepare": "ajs module imports install"
+  },
+  "antelopeJs": {
+    "exportsPath": "dist/interfaces",
+    "imports": [
+      "core@beta"
+    ],
+    "baseUrl": "dist",
+    "paths": {
+      "@/*": [
+        "*"
+      ]
+    },
+    "importsOptional": []
+  },
+  "devDependencies": {
+    "@types/node": "^22.14.1",
+    "typescript": "^5.8.3"
+  },
+  "packageManager": "pnpm@10.6.5"
+}

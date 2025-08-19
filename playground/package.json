@@ -1,0 +1,32 @@
+{
+  "name": "playground",
+  "version": "0.0.1",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "ajs project run -w",
+    "build": "rm -rf dist && tsc"
+  },
+  "devDependencies": {
+    "@types/node": "^22.14.1",
+    "typescript": "^5.8.3"
+  },
+  "antelopeJs": {
+    "imports": [
+      {
+        "name": "core@beta",
+        "skipInstall": true
+      },
+      {
+        "name": "template-module@beta",
+        "skipInstall": true
+      }
+    ],
+    "baseUrl": "dist",
+    "paths": {
+      "@/*": [
+        "*"
+      ]
+    },
+    "importsOptional": []
+  }
+}
