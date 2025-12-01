@@ -4,10 +4,11 @@
   "main": "dist/index.js",
   "scripts": {
     "dev": "ajs project run -w",
-    "build": "rm -rf dist && tsc"
+    "build": "rimraf dist && tsc"
   },
   "devDependencies": {
     "@types/node": "^22.14.1",
+    "rimraf": "^6.0.1",
     "typescript": "^5.8.3"
   },
   "antelopeJs": {
