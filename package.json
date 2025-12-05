@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "main": "dist/index.js",
   "scripts": {
-    "build": "rm -fr dist && tsc",
+    "build": "rimraf dist && tsc",
     "dev:prepare": "cd playground && ajs module imports install",
     "dev": "ajs project run -w -p playground",
     "generate": "ajs module exports generate",
@@ -24,6 +24,7 @@
   },
   "devDependencies": {
     "@types/node": "^22.14.1",
+    "rimraf": "^6.0.1",
     "typescript": "^5.8.3"
   },
   "packageManager": "pnpm@10.6.5"
