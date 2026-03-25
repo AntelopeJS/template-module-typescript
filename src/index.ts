@@ -1,9 +1,9 @@
-import { ImplementInterface } from "@ajs/core/beta";
+import { ImplementInterface } from "@ajs/core";
 
 export async function construct(): Promise<void> {
   ImplementInterface(
-    await import("./interfaces/template-module/beta"),
-    await import("./implementations/template-module/beta")
+    await import("./interfaces/template-module"),
+    await import("./implementations/template-module")
   );
 }
 

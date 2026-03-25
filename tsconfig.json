@@ -21,8 +21,6 @@
 		"noUnusedParameters": true,
 		"baseUrl": "src",
 		"paths": {
-			"@ajs.local/*": ["interfaces/*"],
-			"@ajs/*": ["../.antelope/interfaces.d/*"],
 			"@/*": ["./*"]
 		}
 	},

@@ -4,27 +4,20 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "rm -fr dist && tsc",
-    "dev:prepare": "cd playground && ajs module imports install",
     "dev": "ajs project run -w -p playground",
-    "generate": "ajs module exports generate",
-    "prepare": "ajs module imports install"
+    "generate": "ajs module exports generate"
   },
   "antelopeJs": {
-    "exportsPath": "dist/interfaces",
-    "imports": [
-      "core@beta"
-    ],
     "baseUrl": "dist",
     "paths": {
       "@/*": [
         "*"
       ]
-    },
-    "importsOptional": []
+    }
   },
   "devDependencies": {
-    "@types/node": "^22.14.1",
-    "typescript": "^5.8.3"
+    "@types/node": "^22.19.15",
+    "typescript": "^5.9.3"
   },
   "packageManager": "pnpm@10.6.5"
 }

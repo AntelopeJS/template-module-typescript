@@ -1,4 +1,4 @@
-import { Log } from "@ajs/template-module/beta";
+import { Log } from "@ajs/template-module";
 
 export function construct(config: unknown): void {}
 
