@@ -11,7 +11,9 @@
   },
   "antelopeJs": {
     "baseUrl": "dist",
-    "implements": [],
+    "implements": [
+      "antelopejs-module"
+    ],
     "paths": {
       "@/*": [
         "*"
