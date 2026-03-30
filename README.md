@@ -1,71 +1,97 @@
 # AntelopeJS Module Template
 
-A template repository for creating AntelopeJS interfaces and their implementations. Use this template to start developing new interfaces or implementing existing ones.
+<div align="center">
+<a href="./LICENSE"><img alt="License" src="https://img.shields.io/badge/License-Apache_2.0-blue.svg?style=for-the-badge&labelColor=000000"></a>
+<a href="https://discord.gg/sjK28QHrA7"><img src="https://img.shields.io/badge/Discord-18181B?logo=discord&style=for-the-badge&color=000000" alt="Discord"></a>
+</div>
 
-## 🚀 Quick Start
+A template for creating AntelopeJS interfaces and their implementations. Use this template to start developing new interfaces or implementing existing ones.
 
-1. **Start development mode**:
+## Quick start
+
+1. Install dependencies:
+
+   ```bash
+   pnpm install
+   ```
+
+2. Start development mode:
 
    ```bash
    pnpm run dev
    ```
 
-2. **The playground will run your module** and you can see the Log function in action.
+The playground runs your module automatically. You should see the `Log` function output in the console.
 
-## 🏗️ Module Structure
+## Module structure
 
 ```
 src/
-├── interfaces/           # Interface definitions
-│   └── your-interface-name/
+├── interfaces/                       # Interface definitions
+│   └── template-module/
 │       └── beta/
-│           └── index.ts  # Interface definition
-├── implementations/      # Interface implementations
-│   └── your-interface-name/
+│           └── index.ts
+├── implementations/                  # Interface implementations
+│   └── template-module/
 │       └── beta/
-│           └── index.ts  # Implementation
-└── index.ts             # Module entry point
+│           └── index.ts
+└── index.ts                          # Module entry point
 
 playground/
 ├── src/
-│   └── index.ts         # Test your module here
-├── package.json
-└── antelope.json        # AntelopeJS project configuration
+│   └── index.ts                      # Test your module here
+├── antelope.config.ts                # AntelopeJS project configuration
+└── package.json
 ```
 
-## 📖 Understanding the Template
+## Understanding the template
 
-### Interface Definition
+### Interface definition
 
-The template includes a simple logging interface (`src/interfaces/template-module/beta/index.ts`):
+The template includes a simple logging interface:
 
 ```typescript
-import { InterfaceFunction } from "@ajs/core/beta";
+// src/interfaces/template-module/beta/index.ts
+import { InterfaceFunction } from "@antelopejs/interface-core";
 
-/**
- * This interface defines a basic template-module interface in beta version.
- * It contains a function to log a message which is implemented by the module as a console,
- * but other modules could implement the interface differently.
- */
 export const Log = InterfaceFunction<(message: string) => Promise<void>>();
 ```
 
+The `InterfaceFunction` creates a proxy that queues calls until an implementation is registered. Other modules can provide their own implementation of this interface.
+
 ### Implementation
 
-The console implementation (`src/implementations/template-module/beta/index.ts`):
+The console implementation provides a concrete version of the interface:
 
 ```typescript
+// src/implementations/template-module/beta/index.ts
 export function Log(message: string) {
   console.log(message);
   return Promise.resolve();
 }
 ```
 
-## 🔧 Customization
+### Module entry point
 
-### Creating Your Own Module
+The entry point registers the implementation against the interface during the `construct` lifecycle hook:
 
-1. **Rename the module** in `package.json`:
+```typescript
+// src/index.ts
+import { ImplementInterface } from "@antelopejs/interface-core";
+
+export async function construct(): Promise<void> {
+  ImplementInterface(
+    await import("./interfaces/template-module/beta"),
+    await import("./implementations/template-module/beta")
+  );
+}
+```
+
+## Customization
+
+### Create your own module
+
+1. Rename the module in `package.json`:
 
    ```json
    {
@@ -73,42 +99,24 @@ export function Log(message: string) {
    }
    ```
 
-2. **Update interface paths**:
+2. Rename the `template-module` directories under `interfaces/` and `implementations/` to your interface name.
 
-   - Rename `template-module` directories to your interface name
-   - Update imports in `src/index.ts`
+3. Define your interface functions in `src/interfaces/your-interface-name/beta/index.ts`.
 
-3. **Define your interfaces**:
+4. Create matching implementations in `src/implementations/your-interface-name/beta/index.ts`. Function signatures must match the interface definitions exactly.
 
-   - Add your interface functions in `src/interfaces/your-interface-name/beta/index.ts`
-   - Use proxies to define your interface contracts
+5. Update `src/index.ts` to import from the new paths.
 
-4. **Implement your interfaces**:
+6. Update the playground to test your interfaces:
+   - Add your module as a local dependency in `playground/package.json`.
+   - Import from your module package in `playground/src/index.ts`.
 
-   - Create implementations in `src/implementations/your-interface-name/beta/index.ts`
-   - Ensure function signatures match your interfaces exactly
+## Available scripts
 
-5. **Test in playground**:
-   - Update `playground/src/index.ts` to test your interfaces
-   - Use `@ajs/your-interface-name/beta` imports
+- `pnpm run build` — Build the module for distribution.
+- `pnpm run dev` — Start development mode with the playground in watch mode.
 
-## 🛠️ Available Scripts
-
-- `pnpm run build` - Build the module for distribution
-- `pnpm run dev` - Start development mode with hot reload
-- `pnpm run dev:prepare` - Prepare playground dependencies
-- `pnpm run generate` - Generate module exports
-- `pnpm run prepare` - Install module dependencies
-
-## 🧪 Testing
-
-The playground serves as a testing environment. To test your module:
-
-1. Implement your logic in `playground/src/index.ts`
-2. Run `pnpm run dev`
-3. Check console output for results
-
-## 📚 Documentation
+## Learn more
 
 - [AntelopeJS Documentation](https://antelopejs.com/docs/get-started)
 - [Module Architecture](https://antelopejs.com/docs/interfaces/module-management)
