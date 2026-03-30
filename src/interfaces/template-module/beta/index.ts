@@ -1,4 +1,4 @@
-import { InterfaceFunction } from "@ajs/core";
+import { InterfaceFunction } from "@antelopejs/interface-core";
 
 /**
  * This interface defines a basic template-module interface in beta version.

@@ -1,4 +1,4 @@
-import { Log } from "@ajs/template-module";
+import { Log } from "antelopejs-module/dist/interfaces/template-module/beta";
 
 export function construct(config: unknown): void {}
 
