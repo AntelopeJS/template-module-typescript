@@ -7,7 +7,7 @@
     "dev": "ajs project run -w -p playground"
   },
   "dependencies": {
-    "@antelopejs/interface-core": "^0.0.3"
+    "@antelopejs/interface-core": "^0.0.6"
   },
   "antelopeJs": {
     "baseUrl": "dist",
