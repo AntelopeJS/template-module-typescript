@@ -7,14 +7,18 @@ export default defineConfig({
       source: {
         type: "local",
         path: ".",
+        watchDir: ["src"],
         installCommand: ["npx tsc"],
+        reloadCommand: ["npx tsc"],
       },
     },
     "antelopejs-module": {
       source: {
         type: "local",
         path: "..",
+        watchDir: ["src"],
         installCommand: ["npx tsc"],
+        reloadCommand: ["npx tsc"],
       },
     },
   },
