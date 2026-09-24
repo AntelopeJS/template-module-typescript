@@ -2,12 +2,17 @@
   "name": "antelopejs-module",
   "version": "0.0.1",
   "main": "dist/index.js",
+  "exports": {
+    ".": "./dist/index.js",
+    "./dist/*": "./dist/*/index.js",
+    "./package.json": "./package.json"
+  },
   "scripts": {
     "build": "rimraf dist && tsc",
     "dev": "ajs project run -w -p playground"
   },
   "dependencies": {
-    "@antelopejs/interface-core": ">=0.0.6 <1.0.0"
+    "@antelopejs/interface-core": ">=0.1.1 <1.0.0"
   },
   "antelopeJs": {
     "baseUrl": "dist",
@@ -21,6 +26,7 @@
     }
   },
   "devDependencies": {
+    "@antelopejs/core": "^1.9.1",
     "@types/node": "^22.19.15",
     "rimraf": "^6.0.1",
     "typescript": "^5.9.3"
