@@ -1,13 +1,15 @@
 {
 	"compilerOptions": {
-		"moduleResolution": "node",
+		"moduleResolution": "bundler",
 		"target": "esnext",
 		"module": "commonjs",
 		"lib": ["esnext", "dom"],
+		"types": ["node"],
 		"allowJs": true,
 		"incremental": true,
 		"tsBuildInfoFile": "dist/.tsbuildinfo",
 		"outDir": "dist",
+		"rootDir": "src",
 		"strict": true,
 		"noImplicitAny": true,
 		"esModuleInterop": true,
@@ -21,9 +23,8 @@
 		"useDefineForClassFields": true,
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
-		"baseUrl": "src",
 		"paths": {
-			"@/*": ["./*"]
+			"@/*": ["./src/*"]
 		}
 	},
 	"include": ["src/**/*.ts"]
