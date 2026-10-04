@@ -9,7 +9,8 @@
   },
   "scripts": {
     "build": "rimraf dist && tsc",
-    "dev": "ajs project run -w -p playground"
+    "dev": "ajs project run -w -p playground",
+    "test": "ajs module test"
   },
   "dependencies": {
     "@antelopejs/interface-core": ">=0.1.1 <1.0.0"
@@ -23,10 +24,12 @@
       "@/*": [
         "*"
       ]
-    }
+    },
+    "test": "antelope.test.ts"
   },
   "devDependencies": {
     "@antelopejs/core": "^1.9.1",
+    "@types/mocha": "^10.0.10",
     "@types/node": "^22.19.15",
     "rimraf": "^6.0.1",
     "typescript": "^6.0.3"
