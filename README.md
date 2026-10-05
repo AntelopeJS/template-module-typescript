@@ -37,11 +37,16 @@ src/
 │           └── index.ts
 └── index.ts                          # Module entry point
 
+test/
+└── log.test.ts                       # Module tests
+
 playground/
 ├── src/
 │   └── index.ts                      # Test your module here
 ├── antelope.config.ts                # AntelopeJS project configuration
 └── package.json
+
+antelope.test.ts                      # Test configuration
 ```
 
 ## Understanding the template
@@ -87,6 +92,16 @@ export async function construct(): Promise<void> {
 }
 ```
 
+### Tests
+
+`antelope.test.ts` is the test configuration that `antelopeJs.test` points to in `package.json`. It loads the module itself, built with `tsc`, and runs the `*.test.ts` files of the `test/` folder with Mocha:
+
+```bash
+pnpm test
+```
+
+In tests, an interface function rejects unless a loaded module implements it, so `test/log.test.ts` checks that `Log` reaches the module implementation. Type annotations in the `.ts` test files rely on the type stripping of Node.js, enabled by default from Node.js 22.18.
+
 ## Customization
 
 ### Create your own module
@@ -111,13 +126,19 @@ export async function construct(): Promise<void> {
    - Add your module as a local dependency in `playground/package.json`.
    - Import from your module package in `playground/src/index.ts`.
 
+7. Update the tests:
+   - Rename the module in `antelope.test.ts`.
+   - Import from your module package in the `test/` files.
+
 ## Available scripts
 
 - `pnpm run build` — Build the module for distribution.
 - `pnpm run dev` — Start development mode with the playground in watch mode.
+- `pnpm test` — Run the module tests with `ajs module test`.
 
 ## Learn more
 
 - [AntelopeJS Documentation](https://antelopejs.com/docs/get-started)
 - [Module Architecture](https://antelopejs.com/docs/interfaces/module-management)
 - [Proxy System](https://antelopejs.com/docs/interfaces/proxies)
+- [Testing](https://antelopejs.com/docs/module-development/testing)
