@@ -1,144 +1,80 @@
-# AntelopeJS Module Template
+# AntelopeJS Module TypeScript Template
 
 <div align="center">
-<a href="./LICENSE"><img alt="License" src="https://img.shields.io/badge/License-Apache_2.0-blue.svg?style=for-the-badge&labelColor=000000"></a>
+<a href="./LICENSE"><img alt="License" src="https://img.shields.io/badge/License-Apache_2.0-000000?style=for-the-badge&labelColor=000000"></a>
 <a href="https://discord.gg/sjK28QHrA7"><img src="https://img.shields.io/badge/Discord-18181B?logo=discord&style=for-the-badge&color=000000" alt="Discord"></a>
+<a href="https://framework.antelopejs.com/docs/module-development/creating-a-module"><img src="https://img.shields.io/badge/Docs-18181B?style=for-the-badge&color=000000" alt="Documentation"></a>
 </div>
 
-A template for creating AntelopeJS interfaces and their implementations. Use this template to start developing new interfaces or implementing existing ones.
+A starter for a module that defines an AntelopeJS interface and implements it, with a playground project that calls it.
 
-## Quick start
-
-1. Install dependencies:
-
-   ```bash
-   pnpm install
-   ```
-
-2. Start development mode:
-
-   ```bash
-   pnpm run dev
-   ```
-
-The playground runs your module automatically. You should see the `Log` function output in the console.
-
-## Module structure
+## What you get
 
 ```
-src/
-├── interfaces/                       # Interface definitions
-│   └── template-module/
-│       └── beta/
-│           └── index.ts
-├── implementations/                  # Interface implementations
-│   └── template-module/
-│       └── beta/
-│           └── index.ts
-└── index.ts                          # Module entry point
-
-test/
-└── log.test.ts                       # Module tests
-
-playground/
+my-module/
 ├── src/
-│   └── index.ts                      # Test your module here
-├── antelope.config.ts                # AntelopeJS project configuration
-└── package.json
-
-antelope.test.ts                      # Test configuration
+│   ├── interfaces/template-module/beta/index.ts       # the contract: export const Log = InterfaceFunction<...>()
+│   ├── implementations/template-module/beta/index.ts  # the code behind Log
+│   └── index.ts                                       # construct() binds them with ImplementInterface
+├── test/
+│   └── log.test.ts           # checks that Log reaches the implementation
+├── playground/               # an AntelopeJS project that loads this module and calls Log
+│   ├── src/index.ts
+│   ├── antelope.config.ts
+│   └── package.json
+├── antelope.test.ts          # test configuration, referenced by antelopeJs.test
+├── package.json
+└── tsconfig.json
 ```
 
-## Understanding the template
+## Create it
 
-### Interface definition
-
-The template includes a simple logging interface:
-
-```typescript
-// src/interfaces/template-module/beta/index.ts
-import { InterfaceFunction } from "@antelopejs/interface-core";
-
-export const Log = InterfaceFunction<(message: string) => Promise<void>>();
-```
-
-The `InterfaceFunction` creates a proxy that queues calls until an implementation is registered. Other modules can provide their own implementation of this interface.
-
-### Implementation
-
-The console implementation provides a concrete version of the interface:
-
-```typescript
-// src/implementations/template-module/beta/index.ts
-export function Log(message: string) {
-  console.log(message);
-  return Promise.resolve();
-}
-```
-
-### Module entry point
-
-The entry point registers the implementation against the interface during the `construct` lifecycle hook:
-
-```typescript
-// src/index.ts
-import { ImplementInterface } from "@antelopejs/interface-core";
-
-export async function construct(): Promise<void> {
-  ImplementInterface(
-    await import("./interfaces/template-module/beta"),
-    await import("./implementations/template-module/beta")
-  );
-}
-```
-
-### Tests
-
-`antelope.test.ts` is the test configuration that `antelopeJs.test` points to in `package.json`. It loads the module itself, built with `tsc`, and runs the `*.test.ts` files of the `test/` folder with Mocha:
+Install the CLI once with `npm install -g @antelopejs/core`, then create a module from this template:
 
 ```bash
-pnpm test
+ajs module init my-module --template "Module Typescript"
 ```
 
-In tests, an interface function rejects unless a loaded module implements it, so `test/log.test.ts` checks that `Log` reaches the module implementation. Type annotations in the `.ts` test files rely on the type stripping of Node.js, enabled by default from Node.js 22.18.
+The command copies the template and installs its dependencies. Run `ajs module init my-module` without flags to answer the questions interactively.
 
-## Customization
+## Run it
 
-### Create your own module
+The playground has its own dependencies and imports the built module: install them and build once, then start it.
 
-1. Rename the module in `package.json`:
+```bash
+cd my-module
+pnpm --dir playground install
+pnpm build
+pnpm dev
+```
 
-   ```json
-   {
-     "name": "your-module-name"
-   }
-   ```
+`pnpm dev` runs the playground project in watch mode (`ajs project run -w -p playground`). It builds both modules, and the playground prints `Hello world` through the `Log` interface.
 
-2. Rename the `template-module` directories under `interfaces/` and `implementations/` to your interface name.
+| Command | What it does |
+| --- | --- |
+| `pnpm dev` | Runs the playground in watch mode |
+| `pnpm build` | Builds the module into `dist/` |
+| `pnpm test` | Builds the module, starts it, and runs the `test/*.test.ts` files with `ajs module test` |
 
-3. Define your interface functions in `src/interfaces/your-interface-name/beta/index.ts`.
+## Make it yours
 
-4. Create matching implementations in `src/implementations/your-interface-name/beta/index.ts`. Function signatures must match the interface definitions exactly.
+1. Rename the module in `package.json` (`name` and `antelopeJs.implements`), `antelope.test.ts`, `playground/antelope.config.ts` and `playground/package.json`.
+2. Rename the `template-module` folders under `src/interfaces/` and `src/implementations/` to your interface name, and update the imports in `src/index.ts`, `playground/src/index.ts` and `test/`.
+3. Declare your functions in the interface and implement them with the same signatures.
 
-5. Update `src/index.ts` to import from the new paths.
+## Next steps
 
-6. Update the playground to test your interfaces:
-   - Add your module as a local dependency in `playground/package.json`.
-   - Import from your module package in `playground/src/index.ts`.
+- [Creating a module](https://framework.antelopejs.com/docs/module-development/creating-a-module): the module layout and its `package.json`.
+- [Exporting interfaces](https://framework.antelopejs.com/docs/module-development/exporting-interfaces): publish your interface for other modules.
+- [Proxies](https://framework.antelopejs.com/docs/concepts/proxies): how `InterfaceFunction` queues calls until a module implements it.
+- [Testing](https://framework.antelopejs.com/docs/module-development/testing): write module tests.
 
-7. Update the tests:
-   - Rename the module in `antelope.test.ts`.
-   - Import from your module package in the `test/` files.
+Using Claude Code or Codex? Install the [AntelopeJS agent skills plugin](https://github.com/AntelopeJS/agent-skills) so your agent knows the framework and its CLI.
 
-## Available scripts
+## Contributing
 
-- `pnpm run build` — Build the module for distribution.
-- `pnpm run dev` — Start development mode with the playground in watch mode.
-- `pnpm test` — Run the module tests with `ajs module test`.
+See [CONTRIBUTING.md](./CONTRIBUTING.md). Run `pnpm install` then `pnpm test` before you open a pull request.
 
-## Learn more
+## License
 
-- [AntelopeJS Documentation](https://antelopejs.com/docs/get-started)
-- [Module Architecture](https://antelopejs.com/docs/interfaces/module-management)
-- [Proxy System](https://antelopejs.com/docs/interfaces/proxies)
-- [Testing](https://antelopejs.com/docs/module-development/testing)
+[Apache-2.0](./LICENSE)
