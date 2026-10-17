@@ -39,11 +39,11 @@ The command copies the template and installs its dependencies. Run `ajs module i
 
 ## Run it
 
-The playground has its own dependencies and imports the built module: install them and build once, then start it.
+One root `pnpm install` installs both the module and playground dependencies. Each package keeps its own lockfile to preserve its dependency resolution. The playground imports the built module: build once, then start it.
 
 ```bash
 cd my-module
-pnpm --dir playground install
+pnpm install
 pnpm build
 pnpm dev
 ```
