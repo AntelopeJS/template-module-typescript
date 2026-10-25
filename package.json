@@ -42,9 +42,7 @@
   },
   "packageManager": "pnpm@10.6.5",
   "pnpm": {
-    "neverBuiltDependencies": [
-      "lefthook"
-    ]
+    "onlyBuiltDependencies": []
   },
   "antelopeJs": {
     "baseUrl": "dist",

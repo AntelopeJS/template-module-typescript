@@ -12,9 +12,9 @@ An AntelopeJS module built from the `template-module-typescript` template. `ajs 
 
 ## Checks
 
-Finish every change with `pnpm run checks`: typecheck, lint, format, knip, `pnpm test`, size, ratchet and sync, printing only what failed. `guardrails.ratchet.json` is empty, so every lint finding fails `pnpm run lint`. Its numbers only go down: never add an entry to it. The pre-commit hook formats, lints and size-checks the files you stage, and the pre-push hook runs `typecheck`.
+Finish every change with `pnpm run checks`: typecheck, lint, format, knip, `pnpm test`, size, ratchet and sync, printing only what failed. `guardrails.ratchet.json` is empty, so every lint finding fails `pnpm run lint`. Its numbers only go down: never add an entry to it. The pre-commit hook formats, lints, size-checks and ratchets the files you stage, and the pre-push hook runs `typecheck`.
 
-The scripts, hooks and CI expect pnpm (`packageManager` in `package.json`); a module created with another `--pm` must switch to pnpm. `pnpm.neverBuiltDependencies` stops lefthook's own `postinstall` from installing hooks, so only `prepare` installs them, and only when this directory is the repository root. `ajs module init` installs dependencies before `git init`, so run `pnpm install` once in the new repository to install the hooks; that first commit also lets the hook format the `package.json` the CLI rewrote.
+The scripts, hooks and CI expect pnpm (`packageManager` in `package.json`); a module created with another `--pm` must switch to pnpm. `pnpm.onlyBuiltDependencies` is empty, so no dependency runs install scripts; this stops lefthook's own `postinstall` from installing hooks, so only `prepare` installs them, and only when this directory is the repository root. `ajs module init` installs dependencies before `git init`, so run `pnpm install` once in the new repository to install the hooks, then make the first commit, whose hook formats the `package.json` the CLI rewrote.
 
 `pnpm run checks` does not cover:
 
