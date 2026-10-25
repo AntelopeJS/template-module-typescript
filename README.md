@@ -27,6 +27,7 @@ my-module/
 ├── oxlint.config.ts          # lint, format and dead-code configs from @antelopejs/tooling-configs
 ├── oxfmt.config.ts
 ├── knip.config.ts
+├── .nvmrc                    # Node 24, used by CI
 ├── lefthook.yml              # pre-commit lint, format, size and ratchet hooks; pre-push typecheck
 ├── guardrails.ratchet.json   # lint debt ceilings (empty: the template has none)
 ├── package.json
