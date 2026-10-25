@@ -1,10 +1,9 @@
 import { Log } from "antelopejs-module/dist/interfaces/template-module/beta";
 
-export function construct(config: unknown): void {}
+export function construct(): void {}
 
 export async function start(): Promise<void> {
-  // Test Log function from our interfaces
-  Log("Hello world");
+  await Log("Hello world");
 }
 
 export function destroy(): void {}

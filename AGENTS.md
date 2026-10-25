@@ -12,11 +12,11 @@ An AntelopeJS module built from the `template-module-typescript` template. `ajs 
 
 ## Checks
 
-Finish every change with `pnpm run checks`: typecheck, lint, format, knip, `pnpm test`, size, ratchet and sync, printing only what failed. `guardrails.ratchet.json` records the lint findings the template already had; its numbers only go down. After you remove debt, run `pnpm run ratchet:update` and commit the lowered file. The pre-commit hook rejects new findings on the lines you add.
+Finish every change with `pnpm run checks`: typecheck, lint, format, knip, `pnpm test`, size, ratchet and sync, printing only what failed. `guardrails.ratchet.json` records the lint findings the template already had; its numbers only go down. After you remove debt, run `pnpm run ratchet:update` and commit the lowered file. The pre-commit hook rejects new findings on the lines you add. `ajs module init` installs dependencies before `git init`, so run `pnpm install` once in a new repository to install the hook.
 
 `pnpm run checks` does not cover:
 
-- the playground: run `pnpm build && pnpm --dir playground build`. CI runs the playground build after the checks.
+- the playground's type-check and build (lint, format and the ratchet do cover its files): run `pnpm build && pnpm --dir playground build`. CI runs `pnpm --dir playground build` after the checks, reusing the `dist/` that `ajs module test` compiled, so it fails if the module has no tests to run.
 - the type of the test files: `typecheck` reads only `src/`, and `ajs module test` runs the suites without type-checking them.
 
 ## Versioning

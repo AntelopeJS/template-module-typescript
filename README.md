@@ -23,6 +23,12 @@ my-module/
 │   ├── antelope.config.ts
 │   └── package.json
 ├── antelope.test.ts          # test configuration, referenced by antelopeJs.test
+├── AGENTS.md                 # repository facts and rules for coding agents
+├── oxlint.config.ts          # lint, format and dead-code configs from @antelopejs/tooling-configs
+├── oxfmt.config.ts
+├── knip.config.ts
+├── lefthook.yml              # pre-commit lint, format, size and ratchet hooks
+├── guardrails.ratchet.json   # lint debt ceilings (empty: the template has none)
 ├── package.json
 └── tsconfig.json
 ```
@@ -35,7 +41,7 @@ Install the CLI once with `pnpm add -g @antelopejs/core`, then create a module f
 ajs module init my-module --template "Module Typescript"
 ```
 
-The command copies the template and installs its dependencies. Run `ajs module init my-module` without flags to answer the questions interactively.
+The command copies the template and installs its dependencies. It installs before `git init`, so run `pnpm install` once more in the new repository to install the pre-commit hooks. Run `ajs module init my-module` without flags to answer the questions interactively.
 
 ## Run it
 
@@ -74,7 +80,7 @@ Using Claude Code or Codex? Install the [AntelopeJS agent skills plugin](https:/
 
 ## Contributing
 
-See [CONTRIBUTING.md](./CONTRIBUTING.md). Run `pnpm install` then `pnpm test` before you open a pull request.
+See [CONTRIBUTING.md](./CONTRIBUTING.md). Run `pnpm install` then `pnpm run checks` before you open a pull request.
 
 ## License
 
