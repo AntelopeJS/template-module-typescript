@@ -27,7 +27,7 @@ my-module/
 ├── oxlint.config.ts          # lint, format and dead-code configs from @antelopejs/tooling-configs
 ├── oxfmt.config.ts
 ├── knip.config.ts
-├── lefthook.yml              # pre-commit lint, format, size and ratchet hooks
+├── lefthook.yml              # pre-commit lint, format, size and ratchet hooks; pre-push typecheck
 ├── guardrails.ratchet.json   # lint debt ceilings (empty: the template has none)
 ├── package.json
 └── tsconfig.json
@@ -38,10 +38,10 @@ my-module/
 Install the CLI once with `pnpm add -g @antelopejs/core`, then create a module from this template:
 
 ```bash
-ajs module init my-module --template "Module Typescript"
+ajs module init my-module --template "Module Typescript" --pm pnpm
 ```
 
-The command copies the template and installs its dependencies. It installs before `git init`, so run `pnpm install` once more in the new repository to install the pre-commit hooks. Run `ajs module init my-module` without flags to answer the questions interactively.
+The command copies the template and installs its dependencies. It installs before `git init`, so run `pnpm install` once more in the new repository to install the pre-commit hooks. Run `ajs module init my-module` without flags to answer the questions interactively, and pick pnpm: the scripts, hooks and CI use it.
 
 ## Run it
 
