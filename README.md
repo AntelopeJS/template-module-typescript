@@ -50,11 +50,11 @@ pnpm dev
 
 `pnpm dev` runs the playground project in watch mode (`ajs project run -w -p playground`). It builds both modules, and the playground prints `Hello world` through the `Log` interface.
 
-| Command | What it does |
-| --- | --- |
-| `pnpm dev` | Runs the playground in watch mode |
-| `pnpm build` | Builds the module into `dist/` |
-| `pnpm test` | Builds the module, starts it, and runs the `test/*.test.ts` files with `ajs module test` |
+| Command      | What it does                                                                             |
+| ------------ | ---------------------------------------------------------------------------------------- |
+| `pnpm dev`   | Runs the playground in watch mode                                                        |
+| `pnpm build` | Builds the module into `dist/`                                                           |
+| `pnpm test`  | Builds the module, starts it, and runs the `test/*.test.ts` files with `ajs module test` |
 
 ## Make it yours
 
