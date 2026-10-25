@@ -1,0 +1,9 @@
+{
+  "rules": {
+    "antelopejs/no-comments": 2,
+    "anti-slop/no-unknown-parameters": 1,
+    "eslint/no-unused-vars": 1,
+    "typescript/no-floating-promises": 1
+  },
+  "oversizeFiles": {}
+}
