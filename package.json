@@ -22,14 +22,16 @@
     "lint": "oxlint",
     "format": "oxfmt .",
     "format:check": "oxfmt --check .",
-    "knip": "knip"
+    "knip": "knip",
+    "suppressions": "antelopejs-suppressions",
+    "suppressions:update": "antelopejs-suppressions --update"
   },
   "dependencies": {
     "@antelopejs/interface-core": ">=0.1.1 <1.0.0"
   },
   "devDependencies": {
     "@antelopejs/core": "^1.13.3",
-    "@antelopejs/tooling-configs": "^0.2.0",
+    "@antelopejs/tooling-configs": "^0.2.17",
     "@types/mocha": "^10.0.10",
     "@types/node": "^22.19.15",
     "knip": "^6.34.0",
