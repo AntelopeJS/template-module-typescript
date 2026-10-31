@@ -1,0 +1,11 @@
+diff --git a/src/index.ts b/src/index.ts
+index 07ef166..9ace2b4 100644
+--- a/src/index.ts
++++ b/src/index.ts
+@@ -9,6 +9,5 @@ export async function construct(): Promise<void> {
+ 
+ export function start(): void {}
+ 
+-export function destroy(): void {}
+ 
+ export function stop(): void {}
