@@ -1,0 +1,13 @@
+diff --git a/README.md b/README.md
+index b90b50e..8612d69 100644
+--- a/README.md
++++ b/README.md
+@@ -59,7 +59,7 @@ pnpm dev
+ 
+ | Command           | What it does                                                                             |
+ | ----------------- | ---------------------------------------------------------------------------------------- |
+-| `pnpm dev`        | Runs the playground in watch mode                                                        |
++| `pnpm serve`      | Runs the playground in watch mode                                                        |
+ | `pnpm build`      | Builds the module into `dist/`                                                           |
+ | `pnpm test`       | Builds the module, starts it, and runs the `test/*.test.ts` files with `ajs module test` |
+ | `pnpm run checks` | Runs typecheck, lint, format, knip, the tests, size, ratchet and sync checks             |

@@ -1,0 +1,13 @@
+diff --git a/playground/src/index.ts b/playground/src/index.ts
+index d691b55..a5d923b 100644
+--- a/playground/src/index.ts
++++ b/playground/src/index.ts
+@@ -3,7 +3,7 @@ import { Log } from "antelopejs-module/dist/interfaces/template-module/beta";
+ export function construct(): void {}
+ 
+ export async function start(): Promise<void> {
+-  await Log("Hello world");
++  await Log("Hello");
+ }
+ 
+ export function destroy(): void {}

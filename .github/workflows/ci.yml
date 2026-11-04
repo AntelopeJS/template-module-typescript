@@ -5,6 +5,7 @@ on:
     branches: [main]
   pull_request:
 
+  workflow_dispatch: null
 permissions:
   contents: read
 
@@ -13,3 +14,13 @@ jobs:
     uses: AntelopeJS/.github/.github/workflows/ci-node.yml@v1
     with:
       extra-commands: pnpm --dir playground build
+      renovate-sync: false
+    permissions:
+      contents: read
+  renovate-sync:
+    if: >-
+      github.event_name == 'pull_request' && startsWith(github.head_ref, 'renovate/') && github.event.pull_request.head.repo.full_name == github.repository
+    permissions:
+      contents: write
+      actions: write
+    uses: AntelopeJS/.github/.github/workflows/ci-renovate-sync.yml@v1

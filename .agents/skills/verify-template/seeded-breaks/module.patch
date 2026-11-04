@@ -1,0 +1,9 @@
+diff --git a/src/index.ts b/src/index.ts
+index 07ef166..6bd942c 100644
+--- a/src/index.ts
++++ b/src/index.ts
+@@ -11,4 +11,3 @@ export function start(): void {}
+ 
+ export function destroy(): void {}
+ 
+-export function stop(): void {}

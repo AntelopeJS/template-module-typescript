@@ -1,9 +1,9 @@
-# AntelopeJS Module TypeScript Template
+# AntelopeJS module TypeScript template
 
 <div align="center">
-<a href="./LICENSE"><img alt="License" src="https://img.shields.io/badge/License-Apache_2.0-000000?style=for-the-badge&labelColor=000000"></a>
-<a href="https://discord.gg/g4pFt6eXqu"><img src="https://img.shields.io/badge/Discord-18181B?logo=discord&style=for-the-badge&color=000000" alt="Discord"></a>
-<a href="https://framework.antelopejs.com/docs/module-development/creating-a-module"><img src="https://img.shields.io/badge/Docs-18181B?style=for-the-badge&color=000000" alt="Documentation"></a>
+<a href="./LICENSE"><img alt="License" src="https://img.shields.io/badge/License-Apache_2.0-000000?style=for-the-badge&labelColor=000000" data-illustration></a>
+<a href="https://discord.gg/g4pFt6eXqu"><img src="https://img.shields.io/badge/Discord-18181B?logo=discord&style=for-the-badge&color=000000" alt="Discord" data-illustration></a>
+<a href="https://framework.antelopejs.com/docs/module-development/creating-a-module"><img src="https://img.shields.io/badge/Docs-18181B?style=for-the-badge&color=000000" alt="Documentation" data-illustration></a>
 </div>
 
 A starter for a module that defines an AntelopeJS interface and implements it, with a playground project that calls it.
@@ -27,9 +27,8 @@ my-module/
 ├── oxlint.config.ts          # lint, format and dead-code configs from @antelopejs/tooling-configs
 ├── oxfmt.config.ts
 ├── knip.config.ts
-├── .nvmrc                    # Node 24, used by CI
-├── lefthook.yml              # pre-commit lint, format, size and ratchet hooks; pre-push typecheck
-├── guardrails.ratchet.json   # lint debt ceilings (empty: the template has none)
+├── .nvmrc                    # the Node version CI uses
+├── lefthook.yml              # pre-commit lint, format, size and ratchet hooks, pre-push typecheck
 ├── package.json
 └── tsconfig.json
 ```
@@ -42,11 +41,11 @@ Create a module from this template:
 npx @antelopejs/core module init my-module --template module-typescript --pm pnpm
 ```
 
-The command copies the template and installs its dependencies. It installs before `git init`, so run `pnpm install` once more in the new repository to install the pre-commit hooks. Run `npx @antelopejs/core module init my-module` without flags to answer the questions interactively, and pick pnpm: the scripts, hooks and CI use it.
+The command copies the template and installs its dependencies. It installs before `git init`, so run `pnpm install` once more in the new repository to install the pre-commit hooks. Run `npx @antelopejs/core module init my-module` without flags to answer the questions interactively, and pick pnpm, because the scripts, hooks and CI use it.
 
 ## Run it
 
-One root `pnpm install` installs both the module and playground dependencies. Each package keeps its own lockfile to preserve its dependency resolution. The playground imports the built module: build once, then start it.
+One root `pnpm install` installs both the module and playground dependencies. Each package keeps its own lockfile to preserve its dependency resolution. The playground imports the built module, so build once, then start it.
 
 ```bash
 cd my-module

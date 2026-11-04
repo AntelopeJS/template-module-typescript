@@ -1,0 +1,12 @@
+diff --git a/.gitignore b/.gitignore
+index 879c222..2c9cc92 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -91,7 +91,6 @@ bower_components
+ build/Release
+ 
+ # Dependency directories
+-node_modules/
+ jspm_packages/
+ 
+ # Snowpack dependency directory (https://snowpack.dev/)

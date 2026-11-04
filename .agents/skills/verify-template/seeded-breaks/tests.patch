@@ -1,0 +1,12 @@
+diff --git a/test/log.test.ts b/test/log.test.ts
+index c1fc202..21a117b 100644
+--- a/test/log.test.ts
++++ b/test/log.test.ts
+@@ -3,6 +3,6 @@ import { Log } from "../dist/interfaces/template-module/beta/index.js";
+ 
+ describe("template-module beta", () => {
+   it("logs a message through the module implementation", async () => {
+-    await assert.doesNotReject(Log("Hello from the tests"));
++    await assert.rejects(Log("Hello from the tests"));
+   });
+ });
