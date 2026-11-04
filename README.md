@@ -36,13 +36,13 @@ my-module/
 
 ## Create it
 
-Install the CLI once with `pnpm add -g @antelopejs/core`, then create a module from this template:
+Create a module from this template:
 
 ```bash
-ajs module init my-module --template "Module Typescript" --pm pnpm
+npx @antelopejs/core module init my-module --template module-typescript --pm pnpm
 ```
 
-The command copies the template and installs its dependencies. It installs before `git init`, so run `pnpm install` once more in the new repository to install the pre-commit hooks. Run `ajs module init my-module` without flags to answer the questions interactively, and pick pnpm: the scripts, hooks and CI use it.
+The command copies the template and installs its dependencies. It installs before `git init`, so run `pnpm install` once more in the new repository to install the pre-commit hooks. Run `npx @antelopejs/core module init my-module` without flags to answer the questions interactively, and pick pnpm: the scripts, hooks and CI use it.
 
 ## Run it
 
