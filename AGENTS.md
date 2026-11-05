@@ -24,7 +24,7 @@ The scripts, hooks and CI expect pnpm (`packageManager` in `package.json`); a mo
 
 ## Versioning
 
-`@antelopejs/interface-core` stays a wide `>=0.1.1 <1.0.0` range, because this module only calls it. A module that implements an interface caps its range below the next minor of that interface, since a new minor may add functions it has to implement.
+`@antelopejs/interface-core` stays a wide `>=0.4.0 <1.0.0` range, because this module only calls it. A module that implements an interface caps its range below the next minor of that interface, since a new minor may add functions it has to implement.
 
 <!-- antelopejs-guardrails:start -->
 <!-- Managed by @antelopejs/tooling-configs. `antelopejs-sync` rewrites everything between these markers; write repository-specific guidance outside them. -->
@@ -80,6 +80,7 @@ Verify a boundary against the imports a developer or agent would plausibly write
 | String-keyed object tables are read through own keys only                      | `antelopejs/no-inherited-key-lookup`                |
 | A type guard checks each member it narrows to; keys with `Object.hasOwn`       | `antelopejs/no-presence-only-type-guard`            |
 | A type guard checks the nested elements and values it claims                   | review; no tool                                     |
+| Every file type-aware lint reads is listed by a tsconfig                       | `antelopejs/require-tsconfig-include`               |
 | Params ≤ 5, function ≤ 120 lines, file ≤ 500 lines, depth ≤ 4, complexity ≤ 20 | `eslint/max-*`, `eslint/complexity`                 |
 | Cleanup preserves declarations, runtime exports and DMS auto-imports           | `antelopejs-api-diff <base-ref>`                    |
 | Comment-only changes preserve JavaScript emit                                  | `antelopejs-comment-proof <base-ref>`               |

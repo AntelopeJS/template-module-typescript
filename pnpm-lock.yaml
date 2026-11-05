@@ -9,15 +9,15 @@ importers:
   .:
     dependencies:
       '@antelopejs/interface-core':
-        specifier: '>=0.1.1 <1.0.0'
-        version: 0.1.1
+        specifier: '>=0.4.0 <1.0.0'
+        version: 0.4.0
     devDependencies:
       '@antelopejs/core':
-        specifier: ^1.13.3
-        version: 1.13.3
+        specifier: ^1.20.0
+        version: 1.20.0
       '@antelopejs/tooling-configs':
-        specifier: ^0.2.17
-        version: 0.2.17(knip@6.43.0)(oxfmt@0.66.0)(oxlint@1.81.0(oxlint-tsgolint@7.0.2005))
+        specifier: ^0.2.18
+        version: 0.2.18(knip@6.43.0)(oxfmt@0.66.0)(oxlint@1.81.0(oxlint-tsgolint@7.0.2005))
       '@types/mocha':
         specifier: ^10.0.10
         version: 10.0.10
@@ -48,24 +48,28 @@ importers:
 
 packages:
 
-  '@antelopejs/core@1.13.3':
-    resolution: {integrity: sha512-6xypCf+zUHUC8VdSJtacB+NGYAYVMBjVwHamwSz/GrbwbHGkBtM00b7FSK81AeU8xSpExuHAXcfjk8NTjqQ1bQ==}
-    engines: {node: '>=20.19'}
+  '@antelopejs/core@1.20.0':
+    resolution: {integrity: sha512-7clqf/n8aUi4iCwMG0G2dWLQCwzy9ZxTLHLmOIEtfObw5wuN06s0+n57Zzjr3wbIyR2wD3Q4AeorqJ94QidIfg==}
+    engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
 
-  '@antelopejs/interface-core@0.1.1':
-    resolution: {integrity: sha512-nGxElt51KGWIwGsUcFdGT7ikQEqDB+mLj4NQ/eFL/DI1+j65GJqq9PdkVT4x3/YKchNA48iMbzXyW7bKUsQ8Iw==}
+  '@antelopejs/interface-core@0.4.0':
+    resolution: {integrity: sha512-IPX6dtt3KHknclN4mLOYeRYL2Odz1Pts+dtaZul62NghsBUX/0OFHD4Qhoaf+Beva4hjInbaF918ajr4Z5HVWQ==}
 
-  '@antelopejs/tooling-configs@0.2.17':
-    resolution: {integrity: sha512-8fwh7xQPzazP/l/ivEwRKpfN8qShV9+PRizpI9cBewe2TwoRPu4n95w6sYSlygiRmm0HxLJYZFhmSPRgtiNo1Q==}
+  '@antelopejs/tooling-configs@0.2.18':
+    resolution: {integrity: sha512-bLZ5u4GQUdatgN0+9tJjwv2WXUBApPslgBKb3h98GYK34U1Potxrv5VVldLwmx54+Ldu8EPOp4PShLZqw+SkJw==}
     engines: {node: '>=22.18.0'}
     hasBin: true
     peerDependencies:
       '@nuxt/eslint-config': '>=1.2.0'
       eslint-plugin-perfectionist: '>=5.0.0'
       knip: '>=6.0.0'
+      mongodb-memory-server: '>=10.0.0'
       oxfmt: ^0.66.0
       oxlint: 1.81.0
+      pixelmatch: '>=7.0.0'
+      playwright-core: '>=1.56.0'
+      sharp: '>=0.34.0'
     peerDependenciesMeta:
       '@nuxt/eslint-config':
         optional: true
@@ -73,9 +77,17 @@ packages:
         optional: true
       knip:
         optional: true
+      mongodb-memory-server:
+        optional: true
       oxfmt:
         optional: true
       oxlint:
+        optional: true
+      pixelmatch:
+        optional: true
+      playwright-core:
+        optional: true
+      sharp:
         optional: true
 
   '@clack/core@1.5.1':
@@ -1351,9 +1363,9 @@ packages:
 
 snapshots:
 
-  '@antelopejs/core@1.13.3':
+  '@antelopejs/core@1.20.0':
     dependencies:
-      '@antelopejs/interface-core': 0.1.1
+      '@antelopejs/interface-core': 0.4.0
       '@clack/prompts': 1.8.1
       '@types/proper-lockfile': 4.1.4
       commander: 13.1.0
@@ -1366,11 +1378,11 @@ snapshots:
       semver: 7.8.5
       typescript: 5.9.3
 
-  '@antelopejs/interface-core@0.1.1':
+  '@antelopejs/interface-core@0.4.0':
     dependencies:
       reflect-metadata: 0.2.2
 
-  '@antelopejs/tooling-configs@0.2.17(knip@6.43.0)(oxfmt@0.66.0)(oxlint@1.81.0(oxlint-tsgolint@7.0.2005))':
+  '@antelopejs/tooling-configs@0.2.18(knip@6.43.0)(oxfmt@0.66.0)(oxlint@1.81.0(oxlint-tsgolint@7.0.2005))':
     dependencies:
       '@oxlint/plugins': 1.81.0
       dts-bundle-generator: 9.5.1
