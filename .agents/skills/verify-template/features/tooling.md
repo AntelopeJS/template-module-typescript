@@ -1,6 +1,7 @@
 ---
 covers:
   - tsconfig.json
+  - tsconfig.config.json
   - oxlint.config.ts
   - oxfmt.config.ts
   - knip.config.ts
