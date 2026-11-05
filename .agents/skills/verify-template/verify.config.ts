@@ -190,7 +190,7 @@ const config: VerifyConfig = {
           exitIs(listed, 0),
           equal("README commands without a script", named.filter((name) => !scripts.includes(name)), []),
           equal("README names at least dev, build and test", ["dev", "build", "test"].filter((name) => !named.includes(name)), []),
-          has("README", readme, /ajs module init/),
+          has("README", readme, /npx @antelopejs\/core module init/),
           fileHas(join(module, "CONTRIBUTING.md"), /./),
           fileHas(join(module, "LICENSE"), /License/i),
           exists(join(module, "AGENTS.md")),
