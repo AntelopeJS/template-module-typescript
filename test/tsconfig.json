@@ -4,7 +4,8 @@
     "rootDir": "..",
     "types": ["node", "mocha"],
     "noEmit": true,
-    "incremental": false
+    "incremental": false,
+    "rootDirs": ["../src", "../dist"]
   },
   "include": ["./**/*.ts"]
 }
