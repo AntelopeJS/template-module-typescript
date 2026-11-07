@@ -139,17 +139,6 @@ const config: VerifyConfig = {
         context.expect(test.folder, [equal("the run failed", test.exitCode !== 0, true), has("output", test.stdout + test.stderr, /verify-broken/), has("output", test.stdout, /1 failing/)]);
       },
     },
-    "scaffold-lint": {
-      title: "the created module passes its typecheck, lint and knip",
-      entryPoint: "`pnpm run typecheck`, `pnpm run lint` and `pnpm run knip`",
-      async run(context) {
-        const module = await scaffolded(context);
-        for (const script of ["typecheck", "lint", "knip"]) {
-          const done = await context.command(`pnpm run ${script}`, "pnpm", ["run", script], { cwd: module });
-          context.expect(done.folder, [exitIs(done, 0)]);
-        }
-      },
-    },
     "scaffold-lint-rejects": {
       title: "typecheck rejects an unused local, and lint rejects a debugger statement, so the configs are live",
       entryPoint: "`pnpm run typecheck` and `pnpm run lint` after editing `src/`",
