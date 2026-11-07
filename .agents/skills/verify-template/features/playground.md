@@ -1,6 +1,7 @@
 ---
 covers:
   - playground/**
+  - src/**
 docs:
   - README.md
 journeys:
@@ -28,3 +29,4 @@ pnpm exec antelopejs-verify journey "$RUN" playground
 ## Gotchas
 
 - The playground has its own lockfile; the root `pnpm install` installs it too.
+- `src/**` is covered here as well as in `module`: `playground-dev` is the only journey that runs the `Log` implementation, so a change that stops it logging passes `module` and fails here.
