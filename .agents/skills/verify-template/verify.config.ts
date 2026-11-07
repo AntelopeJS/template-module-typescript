@@ -53,7 +53,7 @@ const config: VerifyConfig = {
     contract: null,
     outbound: null,
     exposure: {
-      globs: [".gitignore", ".npmrc"],
+      globs: [".gitignore", ".npmrc", "playground/.gitignore"],
       funnels: [],
       why: "every module created from the template inherits what git and npm leave out; a dropped .env line commits secrets in modules a revert never reaches",
     },
