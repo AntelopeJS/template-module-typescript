@@ -9,6 +9,7 @@ import {
   has,
   interrupted,
   type JourneyContext,
+  lacks,
   type VerifyConfig,
 } from "@antelopejs/tooling-configs/verify";
 
@@ -139,17 +140,6 @@ const config: VerifyConfig = {
         context.expect(test.folder, [equal("the run failed", test.exitCode !== 0, true), has("output", test.stdout + test.stderr, /verify-broken/), has("output", test.stdout, /1 failing/)]);
       },
     },
-    "scaffold-lint": {
-      title: "the created module passes its typecheck, lint and knip",
-      entryPoint: "`pnpm run typecheck`, `pnpm run lint` and `pnpm run knip`",
-      async run(context) {
-        const module = await scaffolded(context);
-        for (const script of ["typecheck", "lint", "knip"]) {
-          const done = await context.command(`pnpm run ${script}`, "pnpm", ["run", script], { cwd: module });
-          context.expect(done.folder, [exitIs(done, 0)]);
-        }
-      },
-    },
     "scaffold-lint-rejects": {
       title: "typecheck rejects an unused local, and lint rejects a debugger statement, so the configs are live",
       entryPoint: "`pnpm run typecheck` and `pnpm run lint` after editing `src/`",
@@ -164,7 +154,7 @@ const config: VerifyConfig = {
       },
     },
     "scaffold-checks": {
-      title: "the created module passes `pnpm run checks` after its first commit, as AGENTS.md tells the user to do before changing anything",
+      title: "the created module passes `pnpm run checks`, typecheck, lint and knip included, after its first commit, as AGENTS.md tells the user to do before changing anything",
       entryPoint: "the first `git commit`, whose hook formats the `package.json` the CLI rewrote, then `pnpm run checks`",
       async run(context) {
         const module = await scaffolded(context);
@@ -173,7 +163,11 @@ const config: VerifyConfig = {
         const commit = await context.command("first commit", "git", ["-c", "user.name=verify", "-c", "user.email=verify@example.com", "commit", "-m", "chore: initial commit"], { cwd: module });
         context.expect(commit.folder, [exitIs(commit, 0)], { critical: true });
         const checks = await context.command("pnpm run checks", "pnpm", ["run", "checks"], { cwd: module });
-        context.expect(checks.folder, [exitIs(checks, 0)]);
+        context.expect(checks.folder, [
+          exitIs(checks, 0),
+          has("no step was skipped", checks.stdout, /Checks: \d+ passed, \d+ failed\.\n/),
+          ...["typecheck", "lint", "knip"].map((step) => lacks(`no ${step} failure`, checks.stdout, new RegExp(`^\\[${step}\\]`, "m"))),
+        ]);
       },
     },
     "scaffold-docs": {
