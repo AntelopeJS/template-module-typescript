@@ -9,6 +9,7 @@ import {
   has,
   interrupted,
   type JourneyContext,
+  lacks,
   type VerifyConfig,
 } from "@antelopejs/tooling-configs/verify";
 
@@ -153,7 +154,7 @@ const config: VerifyConfig = {
       },
     },
     "scaffold-checks": {
-      title: "the created module passes `pnpm run checks` after its first commit, as AGENTS.md tells the user to do before changing anything",
+      title: "the created module passes `pnpm run checks`, typecheck, lint and knip included, after its first commit, as AGENTS.md tells the user to do before changing anything",
       entryPoint: "the first `git commit`, whose hook formats the `package.json` the CLI rewrote, then `pnpm run checks`",
       async run(context) {
         const module = await scaffolded(context);
@@ -162,7 +163,11 @@ const config: VerifyConfig = {
         const commit = await context.command("first commit", "git", ["-c", "user.name=verify", "-c", "user.email=verify@example.com", "commit", "-m", "chore: initial commit"], { cwd: module });
         context.expect(commit.folder, [exitIs(commit, 0)], { critical: true });
         const checks = await context.command("pnpm run checks", "pnpm", ["run", "checks"], { cwd: module });
-        context.expect(checks.folder, [exitIs(checks, 0)]);
+        context.expect(checks.folder, [
+          exitIs(checks, 0),
+          has("no step was skipped", checks.stdout, /Checks: \d+ passed, \d+ failed\.\n/),
+          ...["typecheck", "lint", "knip"].map((step) => lacks(`no ${step} failure`, checks.stdout, new RegExp(`^\\[${step}\\]`, "m"))),
+        ]);
       },
     },
     "scaffold-docs": {

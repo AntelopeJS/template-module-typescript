@@ -24,7 +24,7 @@ The guardrail configuration the user inherits: TypeScript, lint, format, knip, t
 ## Sub-features
 
 - `scaffold-lint-rejects`: an unused local fails the typecheck and a `debugger` statement fails lint, so the configs are live.
-- `scaffold-checks`: `pnpm run checks`, which runs typecheck, lint and knip among its checks, passes after the first commit, whose hook formats the `package.json` that `ajs module init` rewrites (AGENTS.md documents the step).
+- `scaffold-checks`: `pnpm run checks` passes after the first commit, whose hook formats the `package.json` that `ajs module init` rewrites (AGENTS.md documents the step). Its summary skips no step, and no `typecheck`, `lint` or `knip` failure appears in its output, so those three ran and passed.
 
 ## How to get to it (user POV)
 
