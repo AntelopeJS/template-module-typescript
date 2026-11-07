@@ -21,23 +21,21 @@ const INTERFACE = "dist/interfaces/template-module/beta";
 const MANIFEST_FIELDS = "const m = require('./package.json'); console.log(JSON.stringify({ name: m.name, main: m.main, baseUrl: m.antelopeJs.baseUrl, implements: m.antelopeJs.implements, test: m.antelopeJs.test }))";
 
 /**
- * Creates a module from the template with `ajs module init`, as a user does, and installs it; returns its folder.
+ * Creates a module from the template with `ajs module init`, as a user does, then runs `pnpm install` to install the hooks, once per run; returns the journey's own copy.
  * The harness scaffolds only projects, so the first step uses it for what it also does: pointing `ajs` at the offline manifest.
  */
-async function scaffolded(context: JourneyContext, install = true): Promise<string> {
-  const module = join(context.work, "my-module");
-  const offline = await context.scaffold("point ajs at the offline manifest", module, ["--help"]);
-  context.expect(offline.folder, [exitIs(offline, 0)], { critical: true });
-  const init = await context.command("ajs module init", "pnpm", ["exec", "ajs", "module", "init", module, "--template", TEMPLATE, "--pm", "pnpm", "--git-init"], {
-    cwd: context.repo,
-  });
-  context.expect(init.folder, [exitIs(init, 0), exists(join(module, "package.json")), exists(join(module, "src/index.ts"))], { critical: true });
-  context.tree("scaffolded tree", module);
-  if (install) {
+async function scaffolded(context: JourneyContext): Promise<string> {
+  return context.prepared("my-module", async (module) => {
+    const offline = await context.scaffold("point ajs at the offline manifest", module, ["--help"]);
+    context.expect(offline.folder, [exitIs(offline, 0)], { critical: true });
+    const init = await context.command("ajs module init", "pnpm", ["exec", "ajs", "module", "init", module, "--template", TEMPLATE, "--pm", "pnpm", "--git-init"], {
+      cwd: context.repo,
+    });
+    context.expect(init.folder, [exitIs(init, 0), exists(join(module, "package.json")), exists(join(module, "src/index.ts"))], { critical: true });
+    context.tree("scaffolded tree", module);
     const done = await context.command("pnpm install", "pnpm", ["install", "--frozen-lockfile", "--prefer-offline"], { cwd: module });
     context.expect(done.folder, [exitIs(done, 0)], { critical: true });
-  }
-  return module;
+  });
 }
 
 async function built(context: JourneyContext): Promise<string> {
@@ -69,7 +67,7 @@ const config: VerifyConfig = {
       title: "the created module has the manifest, the interface and its implementation, the test setup and the playground the README promises",
       entryPoint: `\`ajs module init my-module --template "${TEMPLATE}" --pm pnpm\``,
       async run(context) {
-        const module = await scaffolded(context, false);
+        const module = await scaffolded(context);
         const manifest = await context.command("read the manifest", "node", ["-e", MANIFEST_FIELDS], { cwd: module });
         const scripts = await context.command("list the scripts", "node", ["-p", "Object.keys(require('./package.json').scripts).join()"], { cwd: module });
         context.expect(manifest.folder, [
@@ -174,7 +172,7 @@ const config: VerifyConfig = {
       title: "every command the README names exists in the created module, and the files it points at are there",
       entryPoint: "reading `README.md` and `CONTRIBUTING.md` of the created module",
       async run(context) {
-        const module = await scaffolded(context, false);
+        const module = await scaffolded(context);
         const listed = await context.command("list the scripts", "node", ["-p", "Object.keys(require('./package.json').scripts).join()"], { cwd: module });
         const scripts = listed.stdout.trim().split(",");
         const readme = readFileSync(join(module, "README.md"), "utf8");
