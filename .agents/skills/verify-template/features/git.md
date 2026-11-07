@@ -2,6 +2,7 @@
 covers:
   - .gitignore
   - .npmrc
+  - playground/.gitignore
 docs:
   - README.md
 journeys:
