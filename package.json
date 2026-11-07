@@ -8,7 +8,7 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "rimraf dist && tsc",
+    "build": "rimraf dist && tsc --skipLibCheck",
     "dev": "ajs project run -w -p playground",
     "test": "ajs module test",
     "prepare": "[ \"$(git rev-parse --show-toplevel 2>/dev/null)\" != \"$(pwd -P)\" ] || if git rev-parse --is-inside-work-tree >/dev/null 2>&1 && command -v lefthook >/dev/null 2>&1; then lefthook install; fi",
