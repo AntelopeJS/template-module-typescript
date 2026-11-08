@@ -32,11 +32,15 @@ node_modules/.bin/antelopejs-verify plan --base origin/main
 node_modules/.bin/antelopejs-verify journey <run> --plan
 ```
 
-`plan` maps the diff to features and lists unmapped surfaces. `journey <run> --plan` runs every feature `plan` lists as `run` for the run's base, `smoke` first, in one call: it prints each feature's lines in turn, keeps going after a feature fails, and exits 1 when any journey did not pass. A journey that leaves an uncaught error behind ends the call and the line `not run: <features>` names what to rerun. Run it once instead of one call per feature. To rerun after a fix, run one feature, or only the journeys you name, or several features by name:
+`plan` maps the diff to features and lists unmapped surfaces. `journey <run> --plan` runs every feature `plan` lists as `run` for the run's base, `smoke` first, in one call: it prints each feature's lines in turn, keeps going after a feature fails, and exits 1 when any journey did not pass. Run it once instead of one call per feature.
+
+Features run one after another by default. When verify.config.ts declares no `services`, use `--jobs 4` when the machine is otherwise idle (load below the core count); otherwise run sequentially. `--jobs` runs up to that many features at once, each in a process of its own, capped at half the machine's cores; it finishes sooner but costs about twice the CPU time. The output, the evidence and the exit code are those of the sequential call, and a feature that lists a journey an earlier feature lists waits for it, so it still reuses that PASS. A feature whose process dies or leaves an uncaught error is named on stderr, and the others still run. On an interrupt, a feature's process that has not stopped 5 s later, or at a second interrupt, is killed with the apps it started; the call prints every feature that ended and names the rest in `not run: <features>`. `--jobs` above 1 is refused when verify.config.ts declares `services`, because each journey resets them as it starts, which would wipe the data of a journey running beside it. Without `--jobs`, a journey that leaves an uncaught error behind ends the call and the line `not run: <features>` names what to rerun.
+
+To rerun after a fix, run one feature, or only the journeys you name, or several features by name, with `--jobs` too:
 
 ```bash
 node_modules/.bin/antelopejs-verify journey <run> <feature> [journey...]
-node_modules/.bin/antelopejs-verify journey <run> --features <feature>,<feature>
+node_modules/.bin/antelopejs-verify journey <run> --features <feature>,<feature> [--jobs 4]
 ```
 
 The pack ships these journeys for this kind; a feature file names them next to the repository's own:
@@ -84,7 +88,7 @@ node_modules/.bin/antelopejs-verify map
 4. **Docs.** Judge every page `plan` lists as `docs` against what the journeys showed: the `docs:` pages of the touched features, or of every feature when the full set runs. A stale page fails the verdict.
 5. **Formal checks.** `node_modules/.bin/antelopejs-verify formal <run>` runs every formal check of `verify.config.ts` that covers the diff, or whose own `files` the diff changes, and records it under `evidence/formal/<name>/`. For each one it decides, without judgement, whether the diff changed what the covered code does. `emit` (the default) compares the structure of the covered files' JavaScript on the base and on HEAD: node kinds, names and literal values, leaving out types, comments, formatting, parentheses and `export` keywords. Each use of an imported binding stands for its origin (the resolved module and the imported name), so an import retargeted to another module or alias counts as changed; a function declaration refers to the top-level variables and classes of its own file by file and name, so moving it next to a different variable of the same name counts as changed. Exports are keyed by the origin they export, so a re-export or an `export { f as run }` retargeted to another binding counts as changed. Each file must keep its top-level statements and its side-effect imports in order; function declarations, which are hoisted, may move between covered files with their imports. So a type-only edit, a reformat or a moved function declaration counts as unchanged, while reordering statements or moving any other statement counts as changed. `emit` judges behaviour, not the public surface: exports are the api-diff's job. `probe` runs the check's `behaviour.command` with a worktree of each commit and compares what it prints. Then:
    - a covered check that did not run, or exits non-zero (a tool error, or a check that no longer matches its record), fails the verdict;
-   - when the covered behaviour did not change, the verdict reports recorded findings as known findings;
+   - when the covered behaviour did not change, the verdict reports recorded findings as known findings, except a rule HEAD breaks that the base run did not, which fails the verdict whatever the diff touched, the check's own `files` included; when the base run itself exited non-zero, HEAD's findings cannot be compared and fail the verdict, and so does a result whose check's own `files` changed with no base run recorded. A check the diff adds is the exception: when the base could not run it, the base's `verify.config.ts` never names it, none of its files is a git rename of a base file, and the covered behaviour is unchanged, its recorded findings pass as the record it brings. List those findings in the PR body so a reviewer sees what the record accepts. A new check on a diff that also changes the covered code fails with `new check with a covered-code change: land the check in its own PR first`: land the check alone, then the code change. A moved or renamed check is a changed check;
    - when the covered behaviour changed, or the diff changed the check's own `files`, `formal` also runs the check on the base (`baseCommand` when set). A rule the base broke counts as fixed only when HEAD reports it passing (`passing`); a rule the base broke that HEAD does not report at all fails the verdict. A change that leaves no violated rule passes;
    - when the covered behaviour changed, recorded findings fail the verdict unless the base run exited 0 and broke each of them with the same counterexample length (the `states` named group of `violation`, after the rule's group, in decimal digits; a `states` group that is the first group or captures anything else gives no length), and HEAD fixed every other rule the base broke; then the verdict reports them as the same known findings as the base, with the fixed ones. A new rule, a changed length, or a length either run did not print fails.
 
@@ -108,14 +112,13 @@ Write your judgement to `<run>/evidence/judgement.json`:
 }
 ```
 
-A door row is `{ "kind", "location", "irreversible", "containment" }`, where `containment` says what limits the damage. Then render and publish:
+A door row is `{ "kind", "location", "irreversible", "containment" }`, where `containment` says what limits the damage. Then render the verdict:
 
 ```bash
 node_modules/.bin/antelopejs-verify verdict <run> --pr <n>
-node_modules/.bin/antelopejs-verify publish <run> --pr <n>
 ```
 
-`verdict` writes `evidence/verdict.md` and exits 1 unless the result is PASS or PASS+NOTES. `publish` commits the evidence to the orphan branch `verify-evidence` under `pr-<n>/<sha>/` from a temporary worktree, posts the verdict as a PR comment, sets commit status `verify` on the head SHA (`success` for PASS and PASS+NOTES, `error` for NOT VERIFIED, `failure` for FAIL) and reads it back. It prints the error GitHub answers when the token cannot write statuses. A new push voids the status. Post a verdict only from a thread that did not write the change.
+`verdict` writes `evidence/verdict.md` and exits 1 unless the result is PASS or PASS+NOTES. Report the verdict and what you saw in your own reply, from a thread that did not write the change.
 
 ## Trust
 
