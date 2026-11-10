@@ -12,7 +12,7 @@ An AntelopeJS module built from the `template-module-typescript` template. `ajs 
 
 ## Checks
 
-Finish every change with `pnpm run checks`: typecheck, lint, format, knip, `pnpm test`, size, ratchet and sync, printing only what failed. `guardrails.ratchet.json` is empty, so every lint finding fails `pnpm run lint`. Its numbers only go down: never add an entry to it. The pre-commit hook formats, lints, size-checks and ratchets the files you stage, and the pre-push hook runs `typecheck`.
+Finish every change with `pnpm run checks`: typecheck, lint, format, knip, `pnpm test`, size, suppressions, sync and the lockfile checks, printing only what failed. `guardrails.suppressions.json` records no suppression, so every lint finding fails `pnpm run lint`. The pre-commit hook formats, lints, size-checks and ratchets the files you stage, and the pre-push hook runs `typecheck`.
 
 The scripts, hooks and CI expect pnpm (`packageManager` in `package.json`); a module created with another `--pm` must switch to pnpm. `pnpm.onlyBuiltDependencies` is empty, so no dependency runs install scripts; this stops lefthook's own `postinstall` from installing hooks, so only `prepare` installs them, and only when this directory is the repository root. `ajs module init` installs dependencies before `git init`, so run `pnpm install` once in the new repository to install the hooks, then make the first commit, whose hook formats the `package.json` the CLI rewrote.
 
@@ -78,6 +78,7 @@ Verify a boundary against the imports a developer or agent would plausibly write
 | String-keyed object tables are read through own keys only                      | `antelopejs/no-inherited-key-lookup`                |
 | A type guard checks each member it narrows to; keys with `Object.hasOwn`       | `antelopejs/no-presence-only-type-guard`            |
 | A type guard checks the nested elements and values it claims                   | review; no tool                                     |
+| `Object.assign` writes no `unknown`, `any` or mistyped value over a field      | `antelopejs/no-unsafe-object-assign`                |
 | Every file type-aware lint reads is listed by a tsconfig                       | `antelopejs/require-tsconfig-include`               |
 | Params ≤ 5, function ≤ 120 lines, file ≤ 500 lines, depth ≤ 4, complexity ≤ 20 | `eslint/max-*`, `eslint/complexity`                 |
 | Cleanup preserves declarations, runtime exports and DMS auto-imports           | `antelopejs-api-diff <base-ref>`                    |
