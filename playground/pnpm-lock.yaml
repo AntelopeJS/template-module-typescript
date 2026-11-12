@@ -10,7 +10,7 @@ importers:
     dependencies:
       '@antelopejs/interface-core':
         specifier: '>=0.4.0 <1.0.0'
-        version: 0.4.0
+        version: 0.4.1
       antelopejs-module:
         specifier: link:..
         version: link:..
@@ -27,8 +27,8 @@ importers:
 
 packages:
 
-  '@antelopejs/interface-core@0.4.0':
-    resolution: {integrity: sha512-IPX6dtt3KHknclN4mLOYeRYL2Odz1Pts+dtaZul62NghsBUX/0OFHD4Qhoaf+Beva4hjInbaF918ajr4Z5HVWQ==}
+  '@antelopejs/interface-core@0.4.1':
+    resolution: {integrity: sha512-6UZWBp4IXHUNqP26uaqG+kmDfJW79LvPpskITmoouv57zsZ0RgyCLfc0sHs7Bcj/88hvhy/KLYgQ51p11IlBjQ==}
 
   '@types/node@22.19.17':
     resolution: {integrity: sha512-wGdMcf+vPYM6jikpS/qhg6WiqSV/OhG+jeeHT/KlVqxYfD40iYJf9/AE1uQxVWFvU7MipKRkRv8NSHiCGgPr8Q==}
@@ -82,7 +82,7 @@ packages:
 
 snapshots:
 
-  '@antelopejs/interface-core@0.4.0':
+  '@antelopejs/interface-core@0.4.1':
     dependencies:
       reflect-metadata: 0.2.2
 
