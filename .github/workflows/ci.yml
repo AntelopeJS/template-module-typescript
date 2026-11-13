@@ -16,6 +16,7 @@ jobs:
       extra-commands: pnpm --dir playground build
       renovate-sync: false
       test-job: false
+      windows: true
     permissions:
       contents: read
   renovate-sync:
