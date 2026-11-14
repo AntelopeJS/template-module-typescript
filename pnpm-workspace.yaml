@@ -1,2 +1,4 @@
 packages:
   - playground
+minimumReleaseAgeExclude:
+  - "@antelopejs/interface-*"

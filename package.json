@@ -24,14 +24,15 @@
     "format:check": "oxfmt --check .",
     "knip": "knip",
     "suppressions": "antelopejs-suppressions",
-    "suppressions:update": "antelopejs-suppressions --update"
+    "suppressions:update": "antelopejs-suppressions --update",
+    "checks:prepare": "pnpm build"
   },
   "dependencies": {
-    "@antelopejs/interface-core": ">=0.4.0 <1.0.0"
+    "@antelopejs/interface-core": ">=0.5.1 <0.6.0"
   },
   "devDependencies": {
-    "@antelopejs/core": "^1.21.3",
-    "@antelopejs/tooling-configs": "^0.5.8",
+    "@antelopejs/core": "~1.23.3",
+    "@antelopejs/tooling-configs": ">=0.7.2 <0.8.0",
     "@types/mocha": "^10.0.10",
     "@types/node": "^22.19.15",
     "knip": "^6.34.0",
