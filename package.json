@@ -14,9 +14,7 @@
     "prepare": "[ \"$(git rev-parse --show-toplevel 2>/dev/null)\" != \"$(pwd -P)\" ] || if git rev-parse --is-inside-work-tree >/dev/null 2>&1 && command -v lefthook >/dev/null 2>&1; then lefthook install; fi",
     "checks": "antelopejs-checks",
     "size": "antelopejs-check-size",
-    "ratchet": "antelopejs-ratchet",
     "sync": "antelopejs-sync --profile template",
-    "ratchet:update": "antelopejs-ratchet --update",
     "sync:check": "antelopejs-sync --check --profile template",
     "typecheck": "tsc --noEmit --tsBuildInfoFile node_modules/.cache/typecheck/.tsbuildinfo",
     "lint": "oxlint",
@@ -32,7 +30,7 @@
   },
   "devDependencies": {
     "@antelopejs/core": "~1.23.3",
-    "@antelopejs/tooling-configs": ">=0.7.2 <0.8.0",
+    "@antelopejs/tooling-configs": ">=0.8.0 <0.9.0",
     "@types/mocha": "^10.0.10",
     "@types/node": "^22.19.15",
     "knip": "^6.34.0",
