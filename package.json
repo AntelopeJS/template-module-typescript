@@ -30,7 +30,7 @@
   },
   "devDependencies": {
     "@antelopejs/core": "~1.24.5",
-    "@antelopejs/tooling-configs": ">=0.8.9 <0.9.0",
+    "@antelopejs/tooling-configs": "^0.10.7",
     "@types/mocha": "^10.0.10",
     "@types/node": "^22.20.5",
     "knip": "^6.46.1",
@@ -41,7 +41,7 @@
     "rimraf": "^6.0.1",
     "typescript": "^6.0.3"
   },
-  "packageManager": "pnpm@10.6.5",
+  "packageManager": "pnpm@10.34.9",
   "pnpm": {
     "onlyBuiltDependencies": []
   },
