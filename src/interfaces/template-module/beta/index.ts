@@ -5,5 +5,4 @@ import { InterfaceFunction } from "@antelopejs/interface-core";
  * It contains a function to log a message which is implemented by the module as a console,
  * but other modules could implement the interface differently.
  */
-
 export const Log = InterfaceFunction<(message: string) => Promise<void>>();
