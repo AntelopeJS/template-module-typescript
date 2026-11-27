@@ -5,31 +5,31 @@ description: "Drive this module template the way a new user does: scaffold a mod
 
 # Verify template
 
-A user of this template runs `ajs module init --template module-typescript`. They get a copy of the repository without `.agents/` and `.claude/skills/`, and expect it to install, commit, pass its checks and run. `capture.sh` walks that path on a module scaffolded from your working tree, uncommitted changes included, and keeps the output of each step as evidence. No step reaches GitHub or the interface catalog.
+A user of this template runs `ajs module init --template module-typescript`. They get a copy of the repository without `.agents/` and `.claude/skills/`, and expect it to install, commit, pass its checks and run. `capture.sh` walks that path on a module scaffolded from your working tree, uncommitted changes included, and keeps the output of each step as evidence. No step reaches GitHub or the interface catalog. `init` and `install` still download packages from the npm registry.
 
 ## Run it
 
-Run it from the repository root after `pnpm install`:
+Run it after `pnpm install` in this repository. The script finds the repository from its own path, so the directory you run it from does not matter:
 
 ```bash
 run="${TMPDIR:-/tmp}/verify-template-$(date +%Y%m%d-%H%M%S)"
 bash .agents/skills/verify-template/capture.sh "$run"
 ```
 
-The argument is a directory that does not exist yet or is empty. The script prints nothing when every step passes. When a step fails, it prints `FAIL <step>`, the last 20 lines of that step's output, and the path of its log, then exits 1. A whole run takes about 15 seconds on a warm pnpm store.
+The argument is a directory that does not exist yet or is empty. The script prints nothing when every step passes. When a step fails, it prints `FAIL <step>`, the last 20 lines of that step's output, and the path of its log, then exits 1. Ctrl+C or SIGTERM stops the run too, and it still cleans up. A whole run took 13 seconds here.
 
 ## Steps
 
-Each step runs in a scratch folder under `<run>/work`, with its own `HOME`, `CI=1`, `AJS_NO_UPDATE_CHECK=1` and `NO_COLOR=1`:
+Each step runs in a scratch folder under `<run>/work`, with its own `HOME`, `CI=1`, `AJS_NO_UPDATE_CHECK=1`, `NO_COLOR=1` and `LEFTHOOK` unset. The own `HOME` means your `~/.npmrc` is not read. `npm_config_store_dir` keeps your pnpm store, so packages are not downloaded twice:
 
 | Step               | What it runs                                                                                                                                       | What passing proves                                      |
 | ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------- |
 | `snapshot`         | Commits the working tree (tracked and untracked, not ignored) to a local git repository, and lists it in a local catalog `manifest.json`          | The template the next steps scaffold is your change      |
 | `init`             | `ajs module init app --git <catalog> --template local-template --interfaces "" --pm pnpm --git-init`, with the `ajs` of this repository's `@antelopejs/core` | The CLI accepts the template and installs it             |
 | `scaffold-files`   | Lists the files of the new module                                                                                                                  | `.agents/` and `.claude/skills/` were left out           |
-| `install`          | `pnpm install --frozen-lockfile`                                                                                                                   | The lockfiles match, and `prepare` installs the hooks    |
+| `install`          | `pnpm install --frozen-lockfile`                                                                                                                   | The lockfiles match, and `.git/hooks/pre-commit` exists   |
 | `build`            | `pnpm build`                                                                                                                                       | The module compiles                                      |
-| `first-commit`     | `git add -A` and `git commit`, through the pre-commit hook                                                                                        | The hook formats, lints and size-checks a fresh module   |
+| `first-commit`     | `git add -A` and `git commit`, through the pre-commit hook                                                                                        | The hook ran (its output names `antelopejs-lint`) and passed |
 | `checks`           | `pnpm run checks`                                                                                                                                  | The module's own checks pass                             |
 | `playground-build` | `pnpm --dir playground build`                                                                                                                      | The playground type-checks against the built module      |
 | `dev`              | `pnpm dev` in its own process group until the output holds `Hello world`, then SIGINT to the group                                                | The playground loads the module and calls its interface  |
@@ -39,7 +39,7 @@ Each step runs in a scratch folder under `<run>/work`, with its own `HOME`, `CI=
 The script deletes `<run>/work` when it ends, whether a step passed or failed, and stops the `pnpm dev` it started. Only `<run>/logs` stays:
 
 - `<NN>-<step>.log`: the command, then its stdout and stderr.
-- `dev.log`: the whole output of `pnpm dev`, the `Stopped the project` line included.
+- `dev.log`: the whole output of `pnpm dev`, the `Stopped the project` line included. pnpm then prints `ELIFECYCLE  Command failed.` because the script stopped it with SIGINT. That line is not a failure.
 
 Read the logs before you call a run a pass. A step proves only what it runs. Quote the `Checks:` line of `07-checks.log` and the `Hello world` line of `dev.log` in the PR body.
 
