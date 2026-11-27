@@ -35,8 +35,8 @@
     "@types/node": "^22.20.5",
     "knip": "^6.46.1",
     "lefthook": "^2.2.2",
-    "oxfmt": "^0.77.0",
-    "oxlint": "1.81.0",
+    "oxfmt": "^0.80.0",
+    "oxlint": "1.95.0",
     "oxlint-tsgolint": "^7.0.2007",
     "rimraf": "^6.0.1",
     "typescript": "^6.0.3"
