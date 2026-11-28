@@ -11,6 +11,10 @@ CI and the merge queue run every check. Run locally only the rows your diff touc
 
 Node from `.nvmrc` (24) and pnpm from `packageManager` (`corepack enable`). Run `pnpm install` once per checkout. It installs the `playground/` project too, and the lefthook hooks when this directory is the repository root.
 
+## Tools
+
+Mocha through `ajs module test` (config in `antelope.test.ts`), `tsc` (`tsconfig.json`, `test/tsconfig.json`), oxlint (`oxlint.config.ts`), oxfmt (`oxfmt.config.ts`), knip (`knip.config.ts`) and lefthook (`lefthook.yml`), all at the repository root and from `@antelopejs/tooling-configs`.
+
 ## What to run for your change
 
 | Change                                                                                                            | Command                                                                                                                               |
@@ -69,7 +73,7 @@ Read the logs before you call a run a pass. Quote the `Checks:` line of `07-chec
 
 - `ci / checks`: `pnpm run checks` in full (typecheck, lint, format, knip, every test, size, suppressions, `sync:check`, lockfiles), then `pnpm --dir playground build`, and the pull request title check.
 - The merge queue runs the full suite on the merged result and retries a failed test once.
-- The nightly schedule (or a `workflow_dispatch` with `nightly`) adds the Windows leg and Stress.
+- The nightly schedule (or a `workflow_dispatch` with `nightly`) adds Stress, and the Windows leg while the repository is public.
 - `verdict` fails when `ci` or `renovate-sync` failed or was cancelled.
 
 ## Done
