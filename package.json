@@ -30,7 +30,7 @@
   },
   "devDependencies": {
     "@antelopejs/core": "~1.24.9",
-    "@antelopejs/tooling-configs": "^0.10.11",
+    "@antelopejs/tooling-configs": "^0.10.12",
     "@types/mocha": "^10.0.10",
     "@types/node": "^22.20.5",
     "knip": "^6.46.1",
