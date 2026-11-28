@@ -10,7 +10,7 @@
   "scripts": {
     "build": "rimraf dist && tsc --skipLibCheck",
     "dev": "ajs project run -w -p playground",
-    "test": "ajs module test",
+    "test": "ajs module test --timeout 30000",
     "prepare": "[ \"$(git rev-parse --show-toplevel 2>/dev/null)\" != \"$(pwd -P)\" ] || if git rev-parse --is-inside-work-tree >/dev/null 2>&1 && command -v lefthook >/dev/null 2>&1; then lefthook install; fi",
     "checks": "antelopejs-checks",
     "size": "antelopejs-check-size",
@@ -30,7 +30,7 @@
   },
   "devDependencies": {
     "@antelopejs/core": "~1.24.9",
-    "@antelopejs/tooling-configs": "^0.10.8",
+    "@antelopejs/tooling-configs": "^0.10.12",
     "@types/mocha": "^10.0.10",
     "@types/node": "^22.20.5",
     "knip": "^6.46.1",

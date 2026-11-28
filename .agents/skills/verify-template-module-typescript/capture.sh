@@ -71,7 +71,7 @@ run_step() {
 commit() {
   git add -A
   local out
-  out=$(git -c user.name=verify-template -c user.email=verify-template@localhost commit -q -m "chore: scaffold the module" 2>&1) || {
+  out=$(git -c user.name=verify-template-module-typescript -c user.email=verify-template-module-typescript@localhost commit -q -m "chore: scaffold the module" 2>&1) || {
     printf '%s\n' "$out"
     return 1
   }
@@ -120,11 +120,11 @@ snapshot() {
   git init -q -b main template
   git -C "$repo" ls-files -z --cached --others --exclude-standard \
     | (cd "$repo" && tar --null -T - -cf -) | tar -C template -xf -
-  (cd template && git add -A && git -c user.name=verify-template -c user.email=verify-template@localhost commit -q -m snapshot)
+  (cd template && git add -A && git -c user.name=verify-template-module-typescript -c user.email=verify-template-module-typescript@localhost commit -q -m snapshot)
   git init -q -b main catalog
   printf '{"starredInterfaces":[],"templates":[{"name":"Local template","repository":"%s","branch":"main"}]}\n' \
     "$work/template" > catalog/manifest.json
-  (cd catalog && git add -A && git -c user.name=verify-template -c user.email=verify-template@localhost commit -q -m catalog)
+  (cd catalog && git add -A && git -c user.name=verify-template-module-typescript -c user.email=verify-template-module-typescript@localhost commit -q -m catalog)
 }
 
 cwd="$work" run_step snapshot snapshot

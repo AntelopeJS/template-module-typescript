@@ -34,7 +34,7 @@ my-module/
 ├── oxfmt.config.ts
 ├── knip.config.ts
 ├── .nvmrc                    # the Node version CI uses
-├── lefthook.yml              # pre-commit lint, format and size hooks, pre-push typecheck
+├── lefthook.yml              # pre-commit lint, format and size hooks
 ├── package.json
 └── tsconfig.json
 ```
